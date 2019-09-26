@@ -2,7 +2,7 @@ name: 'Git Mirror'
 description: 'Duplicate a repository without forking it.'
 branding:
   icon: 'copy'
-  color: 'green'
+  color: 'orange'
 inputs:
   source-repo:
     description: 'SSH URLs of the source repo.'
