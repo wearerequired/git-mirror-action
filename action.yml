@@ -1,5 +1,5 @@
-name: 'Git Mirror'
-description: 'Duplicate a repository without forking it.'
+name: 'Git Mirror Action'
+description: 'Action for duplicating/mirroring a repository in another location.'
 branding:
   icon: 'copy'
   color: 'orange'
