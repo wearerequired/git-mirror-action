@@ -1,0 +1,20 @@
+name: 'Git Mirror'
+description: 'Duplicate a repository without forking it.'
+branding:
+  icon: 'copy'
+  color: 'green'
+inputs:
+  source-repo:
+    description: 'SSH URLs of the source repo.'
+    required: true
+    default: ''
+  destination-repo:
+    description: 'SSH URLs of the destination repo.'
+    required: true
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.source-repo }}
+    - ${{ inputs.destination-repo }}
