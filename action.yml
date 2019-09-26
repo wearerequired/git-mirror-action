@@ -1,15 +1,15 @@
-name: 'Git Mirror Action'
-description: 'Action for duplicating/mirroring a repository in another location.'
+name: 'Mirror a repository using SSH'
+description: 'Action for mirroring a repository in another location (Bitbucket, GitHub, GitLab, …) using SSH.'
 branding:
   icon: 'copy'
   color: 'orange'
 inputs:
   source-repo:
-    description: 'SSH URLs of the source repo.'
+    description: 'SSH URL of the source repo.'
     required: true
     default: ''
   destination-repo:
-    description: 'SSH URLs of the destination repo.'
+    description: 'SSH URL of the destination repo.'
     required: true
     default: ''
 runs:
