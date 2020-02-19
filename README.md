@@ -14,7 +14,7 @@ A GitHub Action for [mirroring a git repository](https://help.github.com/en/arti
 
 ## Environment variables
 
-`SSH_PRIVATE_KEY`: Create a [SSH key](https://help.github.com/en/enterprise/2.16/user/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) which has access to both repositories. On GitHub they are called "deploy keys". Store [the private key as a secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) and use it in your workflow as seen in the example usage below.
+`SSH_PRIVATE_KEY`: Create a [SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) which has access to both repositories. On GitHub they are called "deploy keys". Store [the private key as a secret](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) and use it in your workflow as seen in the example usage below.
 
 
 ## Example usage
