@@ -28,6 +28,13 @@ with:
   destination-repo: 'git@bitbucket.org:wearerequired/git-mirror-action.git'
 ```
 
+## Docker
+
+```
+docker run --rm -e "SSH_PRIVATE_KEY=$(cat ~/.ssh/id_rsa)" $(docker build -q .) "$SOURCE_REPO" "$DESTINATION_REPO"
+```
+
+
 ## License
 
 The Dockerfile and associated scripts and documentation in this project are released under the [MIT License](LICENSE).
