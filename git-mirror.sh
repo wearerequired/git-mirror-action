@@ -13,4 +13,5 @@ echo "DESTINATION=$DESTINATION_REPO"
 git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
 git remote set-url --push origin "$DESTINATION_REPO"
 git fetch -p origin
+echo "start push"
 git push -f --mirror
