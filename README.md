@@ -32,7 +32,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          source-repo: 'git@github.com:wearerequired/swisscom-magazine.git'
+          source-repo: 'https://github.com/wearerequired/swisscom-magazine.git'
           destination-repo: 'git@bitbucket.org:wearerequired/git-mirror-action.git'
 ```
 
