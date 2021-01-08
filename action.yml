@@ -1,4 +1,4 @@
-name: 'Mirror a repository using SSH'
+name: 'A Mirror a repository using SSH'
 description: 'Action for mirroring a repository in another location (Bitbucket, GitHub, GitLab, …) using SSH.'
 branding:
   icon: 'copy'
@@ -18,3 +18,4 @@ runs:
   args:
     - ${{ inputs.source-repo }}
     - ${{ inputs.destination-repo }}
+    - ${{ inputs.destination-branch }}
