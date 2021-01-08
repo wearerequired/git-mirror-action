@@ -34,6 +34,7 @@ jobs:
         with:
           source-repo: 'git@github.com:wearerequired/swisscom-magazine.git'
           destination-repo: 'git@bitbucket.org:wearerequired/git-mirror-action.git'
+          destination-branch: 'main'
 ```
 
 ## Docker
