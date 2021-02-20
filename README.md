@@ -14,7 +14,9 @@ A GitHub Action for [mirroring a git repository](https://help.github.com/en/arti
 
 ## Environment variables
 
-`SSH_PRIVATE_KEY`: Create a [SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) which has access to both repositories. On GitHub they are called "deploy keys". Store [the private key as a secret](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) and use it in your workflow as seen in the example usage below. If you added the private key in a [Github environment](https://docs.github.com/en/free-pro-team@latest/actions/reference/environments) make sure to reference the environment name in your workflow (otherwise the secret is not passed to the workflow).
+`SSH_PRIVATE_KEY`: Create a [SSH key](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) which has access to both repositories. On GitHub they are called "deploy keys". Store [the private key as a secret](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) and use it in your workflow as seen in the example usage below.
+
+If you added the private key in an [environment](https://docs.github.com/en/actions/reference/environments) make sure to [reference the environment name in your workflow](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idenvironment) otherwise the secret is not passed to the workflow.
 
 
 ## Example workflow
@@ -27,9 +29,6 @@ on: [ push, delete, create ]
 jobs:
   git-mirror:
     runs-on: ubuntu-latest
-    # If the SSH_PRIVATE_KEY is saved as secret in the environment "mirror" then
-    # it must be referenced here.
-    environment: mirror
     steps:
       - uses: wearerequired/git-mirror-action@v1
         env:
