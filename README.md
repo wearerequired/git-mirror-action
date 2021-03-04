@@ -6,11 +6,11 @@ A GitHub Action for [mirroring a git repository](https://help.github.com/en/arti
 
 ### `source-repo`
 
-**Required** SSH URLs of the source repo.
+**Required** SSH URL of the source repo.
 
 ### `destination-repo`
 
-**Required** SSH URLs of the destination repo.
+**Required** SSH URL of the destination repo.
 
 ## Environment variables
 
@@ -20,7 +20,7 @@ If you added the private key in an [environment](https://docs.github.com/en/acti
 
 ## Example workflow
 
-```
+```yml
 name: Mirror to Bitbucket Repo
 
 on: [ push, delete, create ]
@@ -33,13 +33,13 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          source-repo: 'git@github.com:wearerequired/swisscom-magazine.git'
-          destination-repo: 'git@bitbucket.org:wearerequired/git-mirror-action.git'
+          source-repo: "git@github.com:wearerequired/git-mirror-action.git"
+          destination-repo: "git@bitbucket.org:wearerequired/git-mirror-action.git"
 ```
 
 ## Docker
 
-```
+```sh
 docker run --rm -e "SSH_PRIVATE_KEY=$(cat ~/.ssh/id_rsa)" $(docker build -q .) "$SOURCE_REPO" "$DESTINATION_REPO"
 ```
 
