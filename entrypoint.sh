@@ -14,6 +14,7 @@ then
   mkdir -p /root/.ssh
   echo "StrictHostKeyChecking yes" >> /etc/ssh/ssh_config
   echo "$SSH_KNOWN_HOSTS" > /root/.ssh/known_hosts
+  chmod 600 /root/.ssh/known_hosts
 else
   echo "WARNING: StrictHostKeyChecking disabled"
   echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config
