@@ -12,9 +12,14 @@ inputs:
     description: 'SSH URL of the destination repo.'
     required: true
     default: ''
+  dry-run:
+    description: 'Execute a dry run.'
+    required: false
+    default: 'false'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.source-repo }}
     - ${{ inputs.destination-repo }}
+    - ${{ inputs.dry-run }}
