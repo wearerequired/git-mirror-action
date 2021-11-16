@@ -2,14 +2,14 @@
 
 set -e
 
-if [[ -n "$SSH_PRIVATE_KEY" ]]
+if [ -n "$SSH_PRIVATE_KEY" ]
 then
   mkdir -p /root/.ssh
   echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa
   chmod 600 /root/.ssh/id_rsa
 fi
 
-if [[ -n "$SSH_KNOWN_HOSTS" ]]
+if [ -n "$SSH_KNOWN_HOSTS" ]
 then
   mkdir -p /root/.ssh
   echo "StrictHostKeyChecking yes" >> /etc/ssh/ssh_config
