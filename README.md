@@ -12,6 +12,10 @@ A GitHub Action for [mirroring a git repository](https://help.github.com/en/arti
 
 **Required** SSH URL of the destination repo.
 
+### `dry-run`
+
+**Optional** *(default: `false`)* Execute a dry run. All steps are executed, but no updates are pushed to the destination repo.
+
 ## Environment variables
 
 `SSH_PRIVATE_KEY`: Create a [SSH key](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key) **without** a passphrase which has access to both repositories. On GitHub you can add the public key as [a deploy key to the repository](https://docs.github.com/en/developers/overview/managing-deploy-keys#deploy-keys). GitLab has also [deploy keys with write access](https://docs.gitlab.com/ee/user/project/deploy_keys/) and for any other services you may have to add the public key to your personal account.  
