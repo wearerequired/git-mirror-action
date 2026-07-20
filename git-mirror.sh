@@ -16,8 +16,12 @@ echo "DRY RUN=$DRY_RUN"
 git clone --mirror "$SOURCE_REPO" "$SOURCE_DIR" && cd "$SOURCE_DIR"
 git remote set-url --push origin "$DESTINATION_REPO"
 git fetch -p origin
-# Exclude refs created by GitHub for pull request.
-git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+# Only mirror branches and tags. GitHub advertises additional hidden refs
+# (e.g. refs/pull/*, refs/github-services/*) that destinations such as GitLab,
+# Bitbucket or Codeup reject, which fails the whole mirror push.
+git for-each-ref --format 'delete %(refname)' \
+	--exclude 'refs/heads/*' --exclude 'refs/tags/*' refs \
+	| git update-ref --stdin
 
 if [ "$DRY_RUN" = "true" ]
 then

@@ -1,0 +1,54 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  mirror-filters-hidden-refs:
+    name: Mirror only pushes branches and tags
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Hidden GitHub refs are not pushed to the destination
+        run: |
+          set -eu
+          base="$RUNNER_TEMP/e2e"
+          mkdir -p "$base"
+          cd "$base"
+
+          # Source repo carrying GitHub-style hidden refs (refs/pull/*,
+          # refs/github-services/*) next to a regular branch, tag and note.
+          git init -q --bare source.git
+          work="$(mktemp -d)"
+          git clone -q source.git "$work"
+          git -C "$work" -c user.email=t@t -c user.name=t commit -q --allow-empty -m init
+          git -C "$work" push -q origin HEAD:main
+          git -C "$work" push -q origin HEAD:refs/tags/v1
+          c="$(git --git-dir=source.git rev-parse refs/heads/main)"
+          git --git-dir=source.git update-ref refs/pull/1/head "$c"
+          git --git-dir=source.git update-ref refs/github-services/pull/1/head "$c"
+          git --git-dir=source.git update-ref refs/notes/commits "$c"
+
+          # Destination that rejects anything outside heads/tags, mimicking the
+          # pre-receive hook of hosts like GitLab, Bitbucket or Codeup.
+          git init -q --bare dest.git
+          printf '%s\n' \
+            '#!/bin/sh' \
+            'while read old new ref; do' \
+            '  case "$ref" in' \
+            '    refs/heads/*|refs/tags/*) : ;;' \
+            '    *) echo "remote: PermissionDenied: $ref is illegal" >&2; exit 1 ;;' \
+            '  esac' \
+            'done' > dest.git/hooks/pre-receive
+          chmod +x dest.git/hooks/pre-receive
+
+          # Run the real action script. It must succeed: a blacklist regression
+          # would push the hidden refs and get declined by the hook above.
+          workdir="$(mktemp -d)"
+          cd "$workdir"
+          sh "$GITHUB_WORKSPACE/git-mirror.sh" "$base/source.git" "$base/dest.git" false
+
+          # The destination must contain exactly the branch and the tag.
+          got="$(git --git-dir="$base/dest.git" for-each-ref --format '%(refname)' | sort | tr '\n' ' ')"
+          echo "Destination refs: $got"
+          test "$got" = "refs/heads/main refs/tags/v1 "
