@@ -32,6 +32,10 @@ name: Mirror to Bitbucket Repo
 
 on: [ push, delete, create ]
 
+# This action authenticates via SSH and does not use GITHUB_TOKEN,
+# so no token permissions are required.
+permissions: {}
+
 # Ensures that only one mirror task will run at a time.
 concurrency:
   group: git-mirror
