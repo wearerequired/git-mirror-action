@@ -16,8 +16,8 @@ echo "DRY RUN=$DRY_RUN"
 git clone --mirror "$SOURCE_REPO" "$SOURCE_DIR" && cd "$SOURCE_DIR"
 git remote set-url --push origin "$DESTINATION_REPO"
 git fetch -p origin
-# Exclude refs created by GitHub for pull request.
-git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+# Exclude refs created by GitHub for pull request and services.
+git for-each-ref --format 'delete %(refname)' refs/pull refs/github-services | git update-ref --stdin
 
 if [ "$DRY_RUN" = "true" ]
 then
