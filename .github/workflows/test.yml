@@ -17,13 +17,17 @@ jobs:
           cd "$base"
 
           # Source repo carrying GitHub-style hidden refs (refs/pull/*,
-          # refs/github-services/*) next to a regular branch, tag and note.
+          # refs/github-services/*) next to regular branches, tags and a note.
+          # Includes nested (slashed) branch and tag names, which must still be
+          # mirrored.
           git init -q --bare source.git
           work="$(mktemp -d)"
           git clone -q source.git "$work"
           git -C "$work" -c user.email=t@t -c user.name=t commit -q --allow-empty -m init
           git -C "$work" push -q origin HEAD:main
+          git -C "$work" push -q origin HEAD:refs/heads/feature/foo
           git -C "$work" push -q origin HEAD:refs/tags/v1
+          git -C "$work" push -q origin HEAD:refs/tags/release/1.0.0
           c="$(git --git-dir=source.git rev-parse refs/heads/main)"
           git --git-dir=source.git update-ref refs/pull/1/head "$c"
           git --git-dir=source.git update-ref refs/github-services/pull/1/head "$c"
@@ -48,7 +52,8 @@ jobs:
           cd "$workdir"
           sh "$GITHUB_WORKSPACE/git-mirror.sh" "$base/source.git" "$base/dest.git" false
 
-          # The destination must contain exactly the branch and the tag.
+          # The destination must contain exactly the branches and tags,
+          # including the nested (slashed) ones, and nothing else.
           got="$(git --git-dir="$base/dest.git" for-each-ref --format '%(refname)' | sort | tr '\n' ' ')"
           echo "Destination refs: $got"
-          test "$got" = "refs/heads/main refs/tags/v1 "
+          test "$got" = "refs/heads/feature/foo refs/heads/main refs/tags/release/1.0.0 refs/tags/v1 "
