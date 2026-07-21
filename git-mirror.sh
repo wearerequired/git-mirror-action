@@ -19,8 +19,13 @@ git fetch -p origin
 # Only mirror branches and tags. GitHub advertises additional hidden refs
 # (e.g. refs/pull/*, refs/github-services/*) that destinations such as GitLab,
 # Bitbucket or Codeup reject, which fails the whole mirror push.
+#
+# The exclude patterns are given without a glob so they match the whole
+# namespace: a bare "refs/heads" matches every ref below it, whereas
+# "refs/heads/*" would only match one level and drop nested refs such as
+# refs/heads/feature/foo.
 git for-each-ref --format 'delete %(refname)' \
-	--exclude 'refs/heads/*' --exclude 'refs/tags/*' refs \
+	--exclude refs/heads --exclude refs/tags refs \
 	| git update-ref --stdin
 
 if [ "$DRY_RUN" = "true" ]
